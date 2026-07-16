@@ -1,0 +1,45 @@
+.home-entry {
+    display: grid;
+    min-height: calc(100vh - 5.75rem);
+    place-items: center;
+    padding: 2rem;
+    background:
+        linear-gradient(135deg, rgba(22, 161, 99, 0.1) 0 18%, transparent 18% 100%),
+        linear-gradient(145deg, #f6faf8 0%, #eef4fb 50%, #fff7ec 100%);
+}
+
+.welcome-button {
+    max-width: min(100%, 54rem);
+    border: 0;
+    background: transparent;
+    color: #162033;
+    font-size: 5.75rem;
+    font-weight: 900;
+    line-height: 0.95;
+    text-align: center;
+    text-wrap: balance;
+    cursor: pointer;
+    transition: color 160ms ease, transform 160ms ease, text-shadow 160ms ease;
+}
+
+.welcome-button:hover,
+.welcome-button:focus-visible {
+    color: #0e6844;
+    text-shadow: 0 14px 34px rgba(14, 104, 68, 0.22);
+    transform: translateY(-0.18rem);
+}
+
+.welcome-button:focus-visible {
+    outline: 0.2rem solid rgba(14, 104, 68, 0.45);
+    outline-offset: 0.45rem;
+}
+
+@media (max-width: 640px) {
+    .home-entry {
+        padding: 1.25rem;
+    }
+
+    .welcome-button {
+        font-size: 3rem;
+    }
+}

@@ -1,7 +1,26 @@
-﻿@page "/"
+@page "/"
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+@if (showLeaderboard)
+{
+    <Leaderboard />
+}
+else
+{
+    <section class="home-entry">
+        <button class="welcome-button" type="button" @onclick="ShowLeaderboard">
+            Welcome to the Leaderboard App
+        </button>
+    </section>
+}
 
-Welcome to your new app.
+@code {
+    private bool showLeaderboard;
+
+    private void ShowLeaderboard()
+    {
+        showLeaderboard = true;
+    }
+}

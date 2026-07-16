@@ -7,21 +7,72 @@
     position: absolute;
     top: 0.5rem;
     right: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.76%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
 }
 
 .navbar-toggler:checked {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.18);
 }
 
 .top-row {
-    min-height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    min-height: 5.75rem;
+    padding: 1.1rem 1rem 0.9rem;
+    background:
+        linear-gradient(135deg, rgba(14, 104, 68, 0.98), rgba(21, 34, 54, 0.98)),
+        url("data:image/svg+xml,%3Csvg width='160' height='80' viewBox='0 0 160 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.12'%3E%3Cpath d='M0 40h160M80 0v80M26 0c18 18 18 62 0 80M134 0c-18 18-18 62 0 80'/%3E%3Ccircle cx='80' cy='40' r='18'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: cover, 160px 80px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.brand-wrap {
+    min-width: 0;
 }
 
 .navbar-brand {
-    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.navbar-brand span:last-child {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.navbar-brand strong {
+    overflow: hidden;
+    font-size: 1rem;
+    font-weight: 850;
+    letter-spacing: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.navbar-brand small {
+    color: #a8f0c7;
+    font-size: 0.73rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.brand-mark {
+    display: inline-grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    flex: 0 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 900;
 }
 
 .bi {
@@ -50,43 +101,104 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-trophy-fill' viewBox='0 0 16 16'%3E%3Cpath d='M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536A2.5 2.5 0 0 1 16 4.5c0 1.326-.695 2.594-1.857 3.336-.563.36-1.178.555-1.82.608-.577 1.25-1.565 2.08-3.323 2.31V13h2.5a.5.5 0 0 1 .5.5V15h1.5a.5.5 0 0 1 0 1h-11a.5.5 0 0 1 0-1H4v-1.5a.5.5 0 0 1 .5-.5H7v-2.246c-1.758-.23-2.746-1.06-3.323-2.31-.642-.053-1.257-.248-1.82-.608C.695 7.094 0 5.826 0 4.5a2.5 2.5 0 0 1 2.534-2.464A39.38 39.38 0 0 1 2.5.5Zm.1 2.54A1.5 1.5 0 0 0 1 4.5c0 .974.512 1.875 1.396 2.44.236.15.48.26.73.328C2.82 6.145 2.658 4.786 2.6 3.04Zm10.8 0c-.058 1.746-.22 3.105-.526 4.228.25-.068.494-.177.73-.328C14.488 6.375 15 5.474 15 4.5a1.5 1.5 0 0 0-1.6-1.46Z'/%3E%3C/svg%3E");
 }
 
-.nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+.nav-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.55rem;
+    margin: 1rem 0.85rem 1.15rem;
+    padding: 0 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #d9e6ef;
+    font-size: 0.78rem;
+    font-weight: 800;
 }
 
-    .nav-item:first-of-type {
-        padding-top: 1rem;
-    }
+.season-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #16a163;
+    box-shadow: 0 0 0 0.25rem rgba(22, 161, 99, 0.16);
+}
 
-    .nav-item:last-of-type {
-        padding-bottom: 1rem;
-    }
+.nav-section-label {
+    margin: 0.2rem 0.85rem 0.55rem;
+    color: #8ca0b7;
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
 
-    .nav-item ::deep .nav-link {
-        color: #d7d7d7;
-        background: none;
-        border: none;
-        border-radius: 4px;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        line-height: 3rem;
-        width: 100%;
-    }
+.nav-item {
+    font-size: 0.9rem;
+    padding: 0 0.85rem 0.45rem;
+}
+
+.nav-item:last-of-type {
+    padding-bottom: 0.7rem;
+}
+
+.nav-item ::deep .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0 0.85rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: none;
+    color: #d9e6ef;
+    font-weight: 750;
+    line-height: 1;
+    text-decoration: none;
+    transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
 
 .nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.37);
-    color: white;
+    border-color: rgba(168, 240, 199, 0.26);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    box-shadow: inset 4px 0 0 #16a163;
 }
 
 .nav-item ::deep .nav-link:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
+    border-color: rgba(255, 255, 255, 0.16);
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    transform: translateX(0.12rem);
+}
+
+.nav-footer {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0.55rem 0.85rem 1rem;
+    padding: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd8e4;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.rank-badge {
+    width: fit-content;
+    min-width: 4.75rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    background: #ecfdf3;
+    color: #0e6844;
+    font-weight: 900;
+    text-align: center;
 }
 
 .nav-scrollable {
     display: none;
+    padding-bottom: 0.75rem;
 }
 
 .navbar-toggler:checked ~ .nav-scrollable {
@@ -99,11 +211,8 @@
     }
 
     .nav-scrollable {
-        /* Never collapse the sidebar for wide screens */
         display: block;
-
-        /* Allow sidebar to scroll for tall menus */
-        height: calc(100vh - 3.5rem);
+        height: calc(100vh - 5.75rem);
         overflow-y: auto;
     }
 }

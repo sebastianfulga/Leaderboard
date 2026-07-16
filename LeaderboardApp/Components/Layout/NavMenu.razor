@@ -1,36 +1,55 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">LeaderboardApp</a>
+<div class="top-row navbar navbar-dark">
+    <div class="brand-wrap">
+        <a class="navbar-brand" href="">
+            <span class="brand-mark" aria-hidden="true">#1</span>
+            <span>
+                <strong>Leaderboard</strong>
+                <small>Season rankings</small>
+            </span>
+        </a>
     </div>
 </div>
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <div class="nav-summary" aria-label="Leaderboard summary">
+        <span class="season-dot" aria-hidden="true"></span>
+        <span>2026 regular season</span>
+    </div>
+
     <nav class="nav flex-column">
-        <div class="nav-item px-3">
+        <div class="nav-section-label">Main</div>
+
+        <div class="nav-item">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
+        <div class="nav-item">
             <NavLink class="nav-link" href="leaderboard">
                 <span class="bi bi-trophy-fill-nav-menu" aria-hidden="true"></span> Leaderboard
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
+        <div class="nav-section-label">Demos</div>
+
+        <div class="nav-item">
+            <NavLink class="nav-link" href="counter">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+
+        <div class="nav-item">
             <NavLink class="nav-link" href="weather">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
             </NavLink>
         </div>
     </nav>
-</div>
 
+    <div class="nav-footer">
+        <span class="rank-badge">Top 1,000</span>
+        <span>Live board</span>
+    </div>
+</div>
