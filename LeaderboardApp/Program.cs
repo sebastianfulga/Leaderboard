@@ -1,4 +1,5 @@
 using LeaderboardApp.Components;
+using LeaderboardApp.Services;
 
 namespace LeaderboardApp
 {
@@ -11,6 +12,7 @@ namespace LeaderboardApp
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+            builder.Services.AddScoped<ILeaderboardService, MockLeaderboardService>();
 
             var app = builder.Build();
 

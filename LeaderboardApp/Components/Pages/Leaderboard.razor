@@ -1,4 +1,7 @@
 @page "/leaderboard"
+@using LeaderboardApp.Models
+@using LeaderboardApp.Services
+@inject ILeaderboardService LeaderboardService
 
 <PageTitle>Leaderboard</PageTitle>
 
@@ -104,56 +107,12 @@
 </section>
 
 @code {
-    private static readonly string[] FirstNames =
-    [
-        "Jordan", "Maya", "Cameron", "Alex", "Riley", "Morgan", "Taylor", "Casey", "Avery", "Drew"
-    ];
-
-    private static readonly string[] LastNames =
-    [
-        "Stone", "Reyes", "Hayes", "Brooks", "Patel", "Carter", "Knight", "Diaz", "Foster", "Kim"
-    ];
-
-    private static readonly string[] Teams =
-    [
-        "North Club", "Metro Athletic", "Valley United", "Harbor Squad", "Peak Performance", "Central Academy"
-    ];
-
-    private IReadOnlyList<LeaderboardEntry> Rankings { get; } = Enumerable.Range(1, 1000)
-        .Select(rank =>
-        {
-            var firstName = FirstNames[(rank - 1) % FirstNames.Length];
-            var lastName = LastNames[((rank - 1) / FirstNames.Length) % LastNames.Length];
-            var rating = Math.Max(62, 98.4 - rank * 0.036);
-            var wins = Math.Max(8, 42 - rank % 29);
-            var losses = 4 + rank % 17;
-
-            return new LeaderboardEntry(
-                rank,
-                $"{firstName} {lastName}",
-                Teams[(rank - 1) % Teams.Length],
-                rating,
-                12800 - rank * 9,
-                $"{wins}-{losses}",
-                rank % 5 - 2,
-                string.Join("", Enumerable.Range(0, 5).Select(index => (rank + index) % 4 == 0 ? "L" : "W")));
-        })
-        .ToList();
+    private IReadOnlyList<LeaderboardEntry> Rankings { get; set; } = [];
 
     private IEnumerable<LeaderboardEntry> TopThree => Rankings.Take(3);
 
-    private sealed record LeaderboardEntry(
-        int Rank,
-        string Name,
-        string Team,
-        double Rating,
-        int Score,
-        string Record,
-        int Change,
-        string Form)
+    protected override async Task OnInitializedAsync()
     {
-        public string Initials => string.Join("", Name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(part => part[0]));
-
-        public int RatingPercent => Math.Clamp((int)Math.Round(Rating), 0, 100);
+        Rankings = await LeaderboardService.GetRankingsAsync();
     }
 }
