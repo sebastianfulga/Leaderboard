@@ -1,0 +1,159 @@
+@page "/leaderboard"
+
+<PageTitle>Leaderboard</PageTitle>
+
+<section class="leaderboard-page">
+    <header class="leaderboard-header">
+        <div>
+            <p class="eyebrow">Season rankings</p>
+            <h1>Leaderboard</h1>
+            <p class="header-copy">Top competitors ranked by total score, recent form, and match results.</p>
+        </div>
+
+        <div class="header-stats" aria-label="Leaderboard summary">
+            <div>
+                <span class="stat-value">1,000</span>
+                <span class="stat-label">Athletes</span>
+            </div>
+            <div>
+                <span class="stat-value">42</span>
+                <span class="stat-label">Events</span>
+            </div>
+            <div>
+                <span class="stat-value">97.8</span>
+                <span class="stat-label">Top rating</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="leaderboard-toolbar" aria-label="Leaderboard controls">
+        <div class="ranking-tabs" role="tablist" aria-label="Ranking views">
+            <button class="active" type="button">Overall</button>
+            <button type="button">Sprint</button>
+            <button type="button">Endurance</button>
+            <button type="button">Team</button>
+        </div>
+
+        <div class="season-pill">
+            <span class="season-dot" aria-hidden="true"></span>
+            2026 regular season
+        </div>
+    </div>
+
+    <section class="podium" aria-label="Top three competitors">
+        @foreach (var entry in TopThree)
+        {
+            <article class="podium-card rank-@entry.Rank">
+                <div class="rank-badge">#@entry.Rank</div>
+                <div class="athlete-mark">@entry.Initials</div>
+                <div>
+                    <h2>@entry.Name</h2>
+                    <p>@entry.Team</p>
+                </div>
+                <strong>@entry.Score.ToString("N0") pts</strong>
+                <span>@entry.Record</span>
+            </article>
+        }
+    </section>
+
+    <section class="leaderboard-board" aria-label="Full leaderboard">
+        <div class="board-header">
+            <div>Rank</div>
+            <div>Competitor</div>
+            <div>Rating</div>
+            <div>Record</div>
+            <div>Points</div>
+            <div>Form</div>
+        </div>
+
+        <div class="board-rows">
+            @foreach (var entry in Rankings)
+            {
+                <article class="board-row">
+                    <div class="rank-cell">
+                        <span class="rank-number">@entry.Rank</span>
+                        <span class="rank-change @(entry.Change >= 0 ? "up" : "down")">
+                            @(entry.Change >= 0 ? "+" : "")@entry.Change
+                        </span>
+                    </div>
+
+                    <div class="competitor-cell">
+                        <span class="avatar">@entry.Initials</span>
+                        <span>
+                            <strong>@entry.Name</strong>
+                            <small>@entry.Team</small>
+                        </span>
+                    </div>
+
+                    <div class="rating-cell">
+                        <span>@entry.Rating.ToString("0.0")</span>
+                        <div class="rating-track" aria-hidden="true">
+                            <span style="width: @entry.RatingPercent%"></span>
+                        </div>
+                    </div>
+
+                    <div>@entry.Record</div>
+                    <div class="points-cell">@entry.Score.ToString("N0")</div>
+                    <div>
+                        <span class="form-chip">@entry.Form</span>
+                    </div>
+                </article>
+            }
+        </div>
+    </section>
+</section>
+
+@code {
+    private static readonly string[] FirstNames =
+    [
+        "Jordan", "Maya", "Cameron", "Alex", "Riley", "Morgan", "Taylor", "Casey", "Avery", "Drew"
+    ];
+
+    private static readonly string[] LastNames =
+    [
+        "Stone", "Reyes", "Hayes", "Brooks", "Patel", "Carter", "Knight", "Diaz", "Foster", "Kim"
+    ];
+
+    private static readonly string[] Teams =
+    [
+        "North Club", "Metro Athletic", "Valley United", "Harbor Squad", "Peak Performance", "Central Academy"
+    ];
+
+    private IReadOnlyList<LeaderboardEntry> Rankings { get; } = Enumerable.Range(1, 1000)
+        .Select(rank =>
+        {
+            var firstName = FirstNames[(rank - 1) % FirstNames.Length];
+            var lastName = LastNames[((rank - 1) / FirstNames.Length) % LastNames.Length];
+            var rating = Math.Max(62, 98.4 - rank * 0.036);
+            var wins = Math.Max(8, 42 - rank % 29);
+            var losses = 4 + rank % 17;
+
+            return new LeaderboardEntry(
+                rank,
+                $"{firstName} {lastName}",
+                Teams[(rank - 1) % Teams.Length],
+                rating,
+                12800 - rank * 9,
+                $"{wins}-{losses}",
+                rank % 5 - 2,
+                string.Join("", Enumerable.Range(0, 5).Select(index => (rank + index) % 4 == 0 ? "L" : "W")));
+        })
+        .ToList();
+
+    private IEnumerable<LeaderboardEntry> TopThree => Rankings.Take(3);
+
+    private sealed record LeaderboardEntry(
+        int Rank,
+        string Name,
+        string Team,
+        double Rating,
+        int Score,
+        string Record,
+        int Change,
+        string Form)
+    {
+        public string Initials => string.Join("", Name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(part => part[0]));
+
+        public int RatingPercent => Math.Clamp((int)Math.Round(Rating), 0, 100);
+    }
+}
