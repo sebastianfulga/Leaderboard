@@ -101,6 +101,53 @@
     color: #ffffff;
 }
 
+.toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2.4rem;
+    width: min(18rem, 35vw);
+    padding: 0 0.8rem;
+    border: 1px solid #dce3ec;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #66758b;
+}
+
+.search-box:focus-within {
+    border-color: #16a163;
+    box-shadow: 0 0 0 3px rgba(22, 161, 99, 0.14);
+}
+
+.search-box svg {
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 2;
+}
+
+.search-box input {
+    min-width: 0;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #162033;
+}
+
+.search-box input::placeholder {
+    color: #8290a3;
+}
+
 .season-pill {
     display: inline-flex;
     align-items: center;
@@ -216,9 +263,6 @@
 }
 
 .board-header {
-    position: sticky;
-    top: 3.5rem;
-    z-index: 1;
     min-height: 3rem;
     padding: 0 1rem;
     border-bottom: 1px solid #dce3ec;
@@ -232,6 +276,12 @@
 .board-rows {
     max-height: 65vh;
     overflow: auto;
+}
+
+.no-results {
+    padding: 2.5rem 1rem;
+    color: #66758b;
+    text-align: center;
 }
 
 .board-row {
@@ -377,6 +427,15 @@
         grid-template-columns: 1fr;
     }
 
+    .toolbar-actions {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
     .ranking-tabs {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -408,5 +467,9 @@
 
     .podium-card {
         grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .toolbar-actions {
+        grid-template-columns: 1fr;
     }
 }

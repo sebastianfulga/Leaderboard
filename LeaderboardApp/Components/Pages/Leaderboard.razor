@@ -1,4 +1,5 @@
 @page "/leaderboard"
+@rendermode InteractiveServer
 @using LeaderboardApp.Models
 @using LeaderboardApp.Services
 @inject ILeaderboardService LeaderboardService
@@ -37,9 +38,23 @@
             <button type="button">Team</button>
         </div>
 
-        <div class="season-pill">
-            <span class="season-dot" aria-hidden="true"></span>
-            2026 regular season
+        <div class="toolbar-actions">
+            <label class="search-box">
+                <span class="visually-hidden">Search competitors</span>
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
+                </svg>
+                <input type="search"
+                       placeholder="Search competitors"
+                       autocomplete="off"
+                       @bind="SearchText"
+                       @bind:event="oninput" />
+            </label>
+
+            <div class="season-pill">
+                <span class="season-dot" aria-hidden="true"></span>
+                2026 regular season
+            </div>
         </div>
     </div>
 
@@ -70,37 +85,46 @@
         </div>
 
         <div class="board-rows">
-            @foreach (var entry in Rankings)
+            @if (!FilteredRankings.Any())
             {
-                <article class="board-row">
-                    <div class="rank-cell">
-                        <span class="rank-number">@entry.Rank</span>
-                        <span class="rank-change @(entry.Change >= 0 ? "up" : "down")">
-                            @(entry.Change >= 0 ? "+" : "")@entry.Change
-                        </span>
-                    </div>
-
-                    <div class="competitor-cell">
-                        <span class="avatar">@entry.Initials</span>
-                        <span>
-                            <strong>@entry.Name</strong>
-                            <small>@entry.Team</small>
-                        </span>
-                    </div>
-
-                    <div class="rating-cell">
-                        <span>@entry.Rating.ToString("0.0")</span>
-                        <div class="rating-track" aria-hidden="true">
-                            <span style="width: @entry.RatingPercent%"></span>
+                <div class="no-results" role="status">
+                    No competitors found for “@SearchText.Trim()”.
+                </div>
+            }
+            else
+            {
+                @foreach (var entry in FilteredRankings)
+                {
+                    <article class="board-row">
+                        <div class="rank-cell">
+                            <span class="rank-number">@entry.Rank</span>
+                            <span class="rank-change @(entry.Change >= 0 ? "up" : "down")">
+                                @(entry.Change >= 0 ? "+" : "")@entry.Change
+                            </span>
                         </div>
-                    </div>
 
-                    <div>@entry.Record</div>
-                    <div class="points-cell">@entry.Score.ToString("N0")</div>
-                    <div>
-                        <span class="form-chip">@entry.Form</span>
-                    </div>
-                </article>
+                        <div class="competitor-cell">
+                            <span class="avatar">@entry.Initials</span>
+                            <span>
+                                <strong>@entry.Name</strong>
+                                <small>@entry.Team</small>
+                            </span>
+                        </div>
+
+                        <div class="rating-cell">
+                            <span>@entry.Rating.ToString("0.0")</span>
+                            <div class="rating-track" aria-hidden="true">
+                                <span style="width: @entry.RatingPercent%"></span>
+                            </div>
+                        </div>
+
+                        <div>@entry.Record</div>
+                        <div class="points-cell">@entry.Score.ToString("N0")</div>
+                        <div>
+                            <span class="form-chip">@entry.Form</span>
+                        </div>
+                    </article>
+                }
             }
         </div>
     </section>
@@ -109,7 +133,14 @@
 @code {
     private IReadOnlyList<LeaderboardEntry> Rankings { get; set; } = [];
 
+    private string SearchText { get; set; } = string.Empty;
+
     private IEnumerable<LeaderboardEntry> TopThree => Rankings.Take(3);
+
+    private IEnumerable<LeaderboardEntry> FilteredRankings =>
+        string.IsNullOrWhiteSpace(SearchText)
+            ? Rankings
+            : Rankings.Where(entry => entry.Name.Contains(SearchText.Trim(), StringComparison.OrdinalIgnoreCase));
 
     protected override async Task OnInitializedAsync()
     {
