@@ -19,13 +19,36 @@ public sealed class MockLeaderboardService : ILeaderboardService
         "North Club", "Metro Athletic", "Valley United", "Harbor Squad", "Peak Performance", "Central Academy"
     ];
 
-    public Task<IReadOnlyList<LeaderboardEntry>> GetRankingsAsync(CancellationToken cancellationToken = default)
+    private static readonly IReadOnlyList<LeaderboardEntry> Rankings = Enumerable.Range(1, 1000)
+        .Select(CreateEntry)
+        .ToList();
+
+    public Task<LeaderboardPage> GetRankingsAsync(
+        LeaderboardQuery query,
+        CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<LeaderboardEntry> rankings = Enumerable.Range(1, 1000)
-            .Select(CreateEntry)
+        ArgumentOutOfRangeException.ThrowIfLessThan(query.PageNumber, 1);
+        ArgumentOutOfRangeException.ThrowIfLessThan(query.PageSize, 1);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var filteredRankings = string.IsNullOrWhiteSpace(query.SearchTerm)
+            ? Rankings
+            : Rankings
+                .Where(entry => entry.Name.Contains(
+                    query.SearchTerm.Trim(),
+                    StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+        var items = filteredRankings
+            .Skip((query.PageNumber - 1) * query.PageSize)
+            .Take(query.PageSize)
             .ToList();
 
-        return Task.FromResult(rankings);
+        return Task.FromResult(new LeaderboardPage(
+            items,
+            filteredRankings.Count,
+            query.PageNumber,
+            query.PageSize));
     }
 
     private static LeaderboardEntry CreateEntry(int rank)

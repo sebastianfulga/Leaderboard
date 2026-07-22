@@ -4,5 +4,7 @@ namespace LeaderboardApp.Services;
 
 public interface ILeaderboardService
 {
-    Task<IReadOnlyList<LeaderboardEntry>> GetRankingsAsync(CancellationToken cancellationToken = default);
+    Task<LeaderboardPage> GetRankingsAsync(
+        LeaderboardQuery query,
+        CancellationToken cancellationToken = default);
 }
